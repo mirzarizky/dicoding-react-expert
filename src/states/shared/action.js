@@ -1,19 +1,25 @@
 import api from '../../utils/api';
-import { receiveThreadsAction } from '../threads/action';
-import { receiveUsersActionCreator } from '../users/action';
+import {receiveThreadsAction} from '../threads/action';
+import {receiveUsersActionCreator} from '../users/action';
+import {showLoading, hideLoading} from 'react-redux-loading-bar';
+
 
 function asyncPopulateUsersAndThreads() {
-    return async (dispatch) => {
-        try {
-            const users = await api.getAllUsers();
-            const threads = await api.getAllThreads();
+  return async (dispatch) => {
+    dispatch(showLoading());
 
-            dispatch(receiveUsersActionCreator(users));
-            dispatch(receiveThreadsAction(threads));
-        } catch (error) {
-            alert(error.message);
-        }
-    };
+    try {
+      const users = await api.getAllUsers();
+      const threads = await api.getAllThreads();
+
+      dispatch(receiveUsersActionCreator(users));
+      dispatch(receiveThreadsAction(threads));
+    } catch (error) {
+      alert(error.message);
+    } finally {
+      dispatch(hideLoading());
+    }
+  };
 }
 
-export { asyncPopulateUsersAndThreads };
+export {asyncPopulateUsersAndThreads};
