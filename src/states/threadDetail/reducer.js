@@ -12,6 +12,9 @@ function threadDetailReducer(threadDetail = null, action = {}) {
         upVotesBy: threadDetail.upVotesBy.includes(action.payload.userId) ?
           [...threadDetail.upVotesBy] :
           [...threadDetail.upVotesBy, action.payload.userId],
+        downVotesBy: threadDetail.downVotesBy.includes(action.payload.userId) ?
+          threadDetail.downVotesBy.filter((id) => id !== action.payload.userId) :
+          [...threadDetail.downVotesBy],
       };
     case ActionType.DOWNVOTE_THREAD_DETAIL:
       return {
@@ -19,6 +22,9 @@ function threadDetailReducer(threadDetail = null, action = {}) {
         upVotesBy: threadDetail.upVotesBy.includes(action.payload.userId) ?
           threadDetail.upVotesBy.filter((id) => id !== action.payload.userId) :
           [...threadDetail.upVotesBy],
+        downVotesBy: threadDetail.downVotesBy.includes(action.payload.userId) ?
+          [...threadDetail.downVotesBy] :
+          [...threadDetail.downVotesBy, action.payload.userId],
       };
     case ActionType.COMMENT_THREAD_DETAIL:
       return {

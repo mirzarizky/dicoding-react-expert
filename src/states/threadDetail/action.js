@@ -70,13 +70,13 @@ function asyncReceiveTalkDetail(threadId) {
   };
 }
 
-function asyncUpvoteThreadDetail() {
+function asyncUpvoteThread(threadId) {
   return async (dispatch, getState) => {
-    const {authUser, threadDetail} = getState();
-    dispatch(upvoteThreadDetailActionAction(authUser.id, threadDetail.id));
+    const {authUser} = getState();
+    dispatch(upvoteThreadDetailActionAction(authUser.id, threadId));
     dispatch(showLoading());
     try {
-      await api.upvoteThread(threadDetail.id);
+      await api.upvoteThread(threadId);
     } catch (error) {
       alert(error.message);
     } finally {
@@ -85,13 +85,13 @@ function asyncUpvoteThreadDetail() {
   };
 }
 
-function asyncDownvoteThreadDetail() {
+function asyncDownvoteThread(threadId) {
   return async (dispatch, getState) => {
-    const {authUser, threadDetail} = getState();
-    dispatch(downvoteThreadDetailActionAction(authUser.id, threadDetail.id));
+    const {authUser} = getState();
+    dispatch(downvoteThreadDetailActionAction(authUser.id, threadId));
 
     try {
-      await api.downvoteThread(threadDetail.id);
+      await api.downvoteThread(threadId);
     } catch (error) {
       alert(error.message);
     }
@@ -119,8 +119,8 @@ export {
   upvoteThreadDetailActionAction,
   downvoteThreadDetailActionAction,
   asyncReceiveTalkDetail,
-  asyncUpvoteThreadDetail,
-  asyncDownvoteThreadDetail,
+  asyncUpvoteThread,
+  asyncDownvoteThread,
   addCommentThreadDetailAction,
   asyncAddCommentThread,
 };

@@ -5,7 +5,7 @@ import {
   AiOutlineDislike,
   AiOutlineLike,
 } from 'react-icons/ai';
-import {asyncAddCommentThread, asyncReceiveTalkDetail} from '../states/threadDetail/action';
+import {asyncAddCommentThread, asyncDownvoteThread, asyncReceiveTalkDetail, asyncUpvoteThread} from '../states/threadDetail/action';
 import {postedAt} from '../utils/postedAt';
 
 export default function ThreadDetailPage() {
@@ -35,6 +35,14 @@ export default function ThreadDetailPage() {
     setComment(event.target.value);
   };
 
+  function onClickLike() {
+    dispatch(asyncUpvoteThread(id));
+  }
+
+  function onClickDislike() {
+    dispatch(asyncDownvoteThread(id));
+  }
+
   return (
     <div className="max-w-2xl min-h-screen py-6 mx-auto bg-white">
       <div className="px-6">
@@ -47,11 +55,11 @@ export default function ThreadDetailPage() {
           dangerouslySetInnerHTML={{__html: threadDetail?.body}}
         />
         <div className="flex flex-row items-center justify-start mt-4 space-x-4 text-xl min-w-10">
-          <button type="button" className="flex items-center space-x-1">
+          <button type="button" onClick={onClickLike} className="flex items-center space-x-1">
             <AiOutlineLike />
             <span className="text-sm">{threadDetail?.upVotesBy.length}</span>
           </button>
-          <button type="button" className="flex items-center space-x-1">
+          <button type="button" onClick={onClickDislike} className="flex items-center space-x-1">
             <AiOutlineDislike />
             <span className="text-sm">{threadDetail?.downVotesBy.length}</span>
           </button>
