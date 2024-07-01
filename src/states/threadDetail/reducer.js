@@ -13,7 +13,9 @@ function threadDetailReducer(threadDetail = null, action = {}) {
           [...threadDetail.upVotesBy] :
           [...threadDetail.upVotesBy, action.payload.userId],
         downVotesBy: threadDetail.downVotesBy.includes(action.payload.userId) ?
-          threadDetail.downVotesBy.filter((id) => id !== action.payload.userId) :
+          threadDetail.downVotesBy.filter(
+              (id) => id !== action.payload.userId,
+          ) :
           [...threadDetail.downVotesBy],
       };
     case ActionType.DOWNVOTE_THREAD_DETAIL:
