@@ -1,3 +1,4 @@
+import React from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import {
@@ -6,6 +7,8 @@ import {
   AiOutlineDislike,
 } from 'react-icons/ai';
 import {postedAt} from '../utils/postedAt';
+import {useDispatch, useSelector} from 'react-redux';
+import {asyncDownvoteThread, asyncUpvoteThread} from '../states/threads/action';
 
 function ThreadItem({
   title,
@@ -18,6 +21,25 @@ function ThreadItem({
   downVotesBy,
   upVotesBy,
 }) {
+  const dispatch = useDispatch();
+  const {authUser = null} = useSelector(
+      (states) => states,
+  );
+
+  function onClickLike() {
+    if (!authUser) {
+      alert('Please login to upvote/downvote');
+    }
+    dispatch(asyncUpvoteThread(id));
+  }
+
+  function onClickDislike() {
+    if (!authUser) {
+      alert('Please login to upvote/downvote');
+    }
+    dispatch(asyncDownvoteThread(id));
+  }
+
   return (
     <div className="px-2 py-4 bg-white rounded-sm even:bg-gray-50">
       <div className="flex space-x-3">
@@ -26,14 +48,14 @@ function ThreadItem({
             <AiOutlineComment />
             <span className="text-sm">{totalComments}</span>
           </Link>
-          <div className="flex items-center space-x-1">
+          <button type='button' onClick={onClickLike} className="flex items-center space-x-1">
             <AiOutlineLike />
             <span className="text-sm">{upVotesBy.length}</span>
-          </div>
-          <div className="flex items-center space-x-1">
+          </button>
+          <button type='button' onClick={onClickDislike} className="flex items-center space-x-1">
             <AiOutlineDislike />
             <span className="text-sm">{downVotesBy.length}</span>
-          </div>
+          </button>
         </div>
         <div>
           <Link to={`/thread/${id}`}>
