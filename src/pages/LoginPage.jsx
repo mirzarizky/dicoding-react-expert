@@ -3,6 +3,7 @@ import {useNavigate} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {asyncSetAuthUser} from '../states/authUser/action';
 import LoginInput from '../components/LoginInput';
+import {Helmet} from 'react-helmet';
 
 export default function LoginPage() {
   const dispatch = useDispatch();
@@ -20,8 +21,14 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="container px-2 py-6 mx-auto max-w-7xl">
-      <LoginInput login={onLogin} />
-    </div>
+    <>
+      <Helmet>
+        <title>Login</title>
+      </Helmet>
+
+      <div className="container px-2 py-6 mx-auto max-w-7xl">
+        <LoginInput login={onLogin} />
+      </div>
+    </>
   );
 }

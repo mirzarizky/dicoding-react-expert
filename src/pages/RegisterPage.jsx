@@ -3,6 +3,7 @@ import {useNavigate} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {asyncRegisterUser} from '../states/users/action';
 import RegisterInput from '../components/RegisterInput';
+import {Helmet} from 'react-helmet';
 
 export default function RegisterPage() {
   const navigate = useNavigate();
@@ -21,8 +22,14 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="container px-2 py-6 mx-auto max-w-7xl">
-      <RegisterInput register={onRegister} />
-    </div>
+    <>
+      <Helmet>
+        <title>Register</title>
+      </Helmet>
+
+      <div className="container px-2 py-6 mx-auto max-w-7xl">
+        <RegisterInput register={onRegister} />
+      </div>
+    </>
   );
 }

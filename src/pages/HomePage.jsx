@@ -1,8 +1,9 @@
-import {useEffect} from 'react';
+import React, {useEffect} from 'react';
+import {Helmet} from 'react-helmet';
+import {AiOutlinePlusCircle} from 'react-icons/ai';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigate} from 'react-router-dom';
 import ThreadItem from '../components/ThreadItem';
-import {AiOutlinePlusCircle} from 'react-icons/ai';
 import {asyncPopulateUsersAndThreads} from '../states/shared/action';
 
 export default function HomePage() {
@@ -27,22 +28,28 @@ export default function HomePage() {
   }));
 
   return (
-    <div className="max-w-2xl min-h-screen py-4 mx-auto bg-white">
-      <div className='flex flex-row items-center justify-between px-4'>
-        <h1 className='text-xl font-medium'>Top Thread</h1>
-        <button
-          type="button"
-          onClick={onClickAdd}
-          className="p-2 text-2xl text-white transition bg-gray-900 border border-gray-900 rounded-full hover:bg-white hover:text-gray-900"
-        >
-          <AiOutlinePlusCircle />
-        </button>
+    <>
+      <Helmet>
+        <title>Top Thread</title>
+      </Helmet>
+
+      <div className="max-w-2xl min-h-screen py-4 mx-auto bg-white">
+        <div className='flex flex-row items-center justify-between px-4'>
+          <h1 className='text-xl font-medium'>Top Thread</h1>
+          <button
+            type="button"
+            onClick={onClickAdd}
+            className="p-2 text-2xl text-white transition bg-gray-900 border border-gray-900 rounded-full hover:bg-white hover:text-gray-900"
+          >
+            <AiOutlinePlusCircle />
+          </button>
+        </div>
+        <div className="space-y-4">
+          {threadList.map((thread) => {
+            return <ThreadItem {...thread} key={thread.id} />;
+          })}
+        </div>
       </div>
-      <div className="space-y-4">
-        {threadList.map((thread) => {
-          return <ThreadItem {...thread} key={thread.id} />;
-        })}
-      </div>
-    </div>
+    </>
   );
 }

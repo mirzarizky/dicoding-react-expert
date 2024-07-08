@@ -8,6 +8,7 @@ import {
 import {asyncAddCommentThread, asyncDownvoteThread, asyncReceiveTalkDetail, asyncUpvoteThread} from '../states/threadDetail/action';
 import {postedAt} from '../utils/postedAt';
 import CommentItem from '../components/CommentItem';
+import {Helmet} from 'react-helmet';
 
 export default function ThreadDetailPage() {
   const dispatch = useDispatch();
@@ -45,40 +46,45 @@ export default function ThreadDetailPage() {
   }
 
   return (
-    <div className="max-w-2xl min-h-screen py-6 mx-auto bg-white">
-      <div className="px-6">
-        <span className="px-2 py-1 text-sm text-gray-600 bg-white border border-gray-600 rounded">
-                    #{threadDetail?.category}
-        </span>
-        <h1 className="mt-4 text-2xl font-bold">{threadDetail?.title}</h1>
-        <div
-          className="mt-4 text-gray-600 transition hover:text-gray-900"
-          dangerouslySetInnerHTML={{__html: threadDetail?.body}}
-        />
-        <div className="flex flex-row items-center justify-start mt-4 space-x-4 text-xl min-w-10">
-          <button type="button" onClick={onClickLike} className="flex items-center space-x-1">
-            <AiOutlineLike />
-            <span className="text-sm">{threadDetail?.upVotesBy.length}</span>
-          </button>
-          <button type="button" onClick={onClickDislike} className="flex items-center space-x-1">
-            <AiOutlineDislike />
-            <span className="text-sm">{threadDetail?.downVotesBy.length}</span>
-          </button>
-          <div className="flex items-center space-x-4">
-            <div className="flex items-center space-x-2 text-base">
-              <img
-                className="rounded-full size-6"
-                src={threadDetail?.owner.avatar}
-                alt={threadDetail?.owner.name}
-              />
-              <span>{threadDetail?.owner.name}</span>
-            </div>
-            <p className="text-base">{postedAt(threadDetail?.createdAt)}</p>
-          </div>
-        </div>
+    <>
+      <Helmet>
+        <title>{threadDetail?.title}</title>
+      </Helmet>
 
-        <h3 className="mt-2 font-semibold">Beri komentar</h3>
-        {authUser ? (
+      <div className="max-w-2xl min-h-screen py-6 mx-auto bg-white">
+        <div className="px-6">
+          <span className="px-2 py-1 text-sm text-gray-600 bg-white border border-gray-600 rounded">
+                    #{threadDetail?.category}
+          </span>
+          <h1 className="mt-4 text-2xl font-bold">{threadDetail?.title}</h1>
+          <div
+            className="mt-4 text-gray-600 transition hover:text-gray-900"
+            dangerouslySetInnerHTML={{__html: threadDetail?.body}}
+          />
+          <div className="flex flex-row items-center justify-start mt-4 space-x-4 text-xl min-w-10">
+            <button type="button" onClick={onClickLike} className="flex items-center space-x-1">
+              <AiOutlineLike />
+              <span className="text-sm">{threadDetail?.upVotesBy.length}</span>
+            </button>
+            <button type="button" onClick={onClickDislike} className="flex items-center space-x-1">
+              <AiOutlineDislike />
+              <span className="text-sm">{threadDetail?.downVotesBy.length}</span>
+            </button>
+            <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-2 text-base">
+                <img
+                  className="rounded-full size-6"
+                  src={threadDetail?.owner.avatar}
+                  alt={threadDetail?.owner.name}
+                />
+                <span>{threadDetail?.owner.name}</span>
+              </div>
+              <p className="text-base">{postedAt(threadDetail?.createdAt)}</p>
+            </div>
+          </div>
+
+          <h3 className="mt-2 font-semibold">Beri komentar</h3>
+          {authUser ? (
                     <form className="" onSubmit={onSubmitComment}>
                       <textarea
                         name="comment"
@@ -104,18 +110,19 @@ export default function ThreadDetailPage() {
                     </div>
                 )}
 
-        <div className="mt-4">
-          <div className="text-lg font-semibold">
-            <span className="">Komentar </span>
-            <span>({threadDetail?.comments.length})</span>
-          </div>
-          <div className="divide-y-2">
-            {threadDetail?.comments.map(
-                (comment) => <CommentItem key={comment.id} {...comment} />,
-            )}
+          <div className="mt-4">
+            <div className="text-lg font-semibold">
+              <span className="">Komentar </span>
+              <span>({threadDetail?.comments.length})</span>
+            </div>
+            <div className="divide-y-2">
+              {threadDetail?.comments.map(
+                  (comment) => <CommentItem key={comment.id} {...comment} />,
+              )}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
