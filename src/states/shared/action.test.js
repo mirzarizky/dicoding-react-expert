@@ -5,6 +5,15 @@ import {hideLoading, showLoading} from 'react-redux-loading-bar';
 import {receiveUsersActionCreator} from '../users/action';
 import {receiveThreadsAction} from '../threads/action';
 
+/**
+ * test scenario for asyncPopulateUsersAndThread thunk function
+ *
+ * - asyncPopulateUsersAndThreads thunk
+ *    - should dispatch action correctly when data fetching success
+ *    - should dispatch action and call alert correctly when data fetching failed
+ *
+ */
+
 describe('asyncPopulateUsersAndThreads thunk', () => {
   beforeEach(() => {
     api._getAllUsers = api.getAllUsers;

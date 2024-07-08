@@ -4,6 +4,14 @@ import {asyncSetAuthUser} from './action';
 import {hideLoading, showLoading} from 'react-redux-loading-bar';
 import {setAuthUserActionCreator} from '../authUser/action';
 
+/**
+ * test scenario for asyncSetAuthUser thunk function
+ *
+ * - asyncSetAuthUser thunk
+ *    - should dispatch action correctly when email and password are correct
+ *    - should dispatch action and alert when data login failed
+ *
+ */
 describe('asyncSetAuthUser thunk', () => {
   beforeEach(() => {
     api._login = api.login;

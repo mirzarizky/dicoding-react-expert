@@ -4,6 +4,14 @@ import {asyncRegisterUser} from './action';
 import {hideLoading, showLoading} from 'react-redux-loading-bar';
 import {setAuthUserActionCreator} from '../authUser/action';
 
+/**
+ * test scenario for asynRegisterUser thunk function
+ *
+ * - asyncRegisterUser thunk
+ *    - should dispatch action correctly when register success
+ *    - should dispatch action correctly and alert when register failed
+ *
+ */
 describe('asyncRegisterUser thunk', () => {
   beforeEach(() => {
     api._login = api.login;

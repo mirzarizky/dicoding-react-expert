@@ -4,6 +4,14 @@ import {asyncPreloadProcess, setIsPreloadActionCreator} from './action';
 import {hideLoading, showLoading} from 'react-redux-loading-bar';
 import {setAuthUserActionCreator} from '../authUser/action';
 
+/**
+ * test scenario for asyncPreload thunk function
+ *
+ * - asyncPreloadProcess thunk
+ *    - should dispatch action correctly when data fetching success
+ *    - should dispatch action and set user correctly when data fetching failed
+ *
+ */
 describe('asyncPreloadProcess thunk', () => {
   beforeEach(() => {
     api._getOwnProfile = api.getOwnProfile;

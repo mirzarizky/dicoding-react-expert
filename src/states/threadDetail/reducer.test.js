@@ -2,15 +2,30 @@
 import {describe, expect, it} from 'vitest';
 import threadDetailReducer from './reducer';
 
+/**
+ * test scenario for threadDetailReducer function
+ *
+ *  - threadDetailReducer function
+ *    - should return the initial state when given by unknown action
+ *    - should return the detail thread when given by RECEIVE_THREAD_DETAIL action
+ *    - should return null when given by CLEAR_THREAD_DETAIL action
+ *    - should return the thread with the upvoted thread when given by UPVOTE_THREAD action
+ *    - should return the thread with the downvoted thread when given by DOWNVOTE_THREAD action
+ *    - should return the thread with the new comment when given by COMMENT_THREAD_DETAIL
+ *
+ */
+
 describe('threadDetailReducer function', () => {
-  it('should return the initial state when given by unknown action', () => {
-    const initialState = null;
-    const action = {type: 'UNKNOWN'};
+  it(
+      'should return the initial state when given by unknown action',
+      () => {
+        const initialState = null;
+        const action = {type: 'UNKNOWN'};
 
-    const nextState = threadDetailReducer(initialState, action);
+        const nextState = threadDetailReducer(initialState, action);
 
-    expect(nextState).toEqual(initialState);
-  });
+        expect(nextState).toEqual(initialState);
+      });
 
   it(
       'should return the detail thread when given by RECEIVE_THREAD_DETAIL action',
@@ -55,24 +70,14 @@ describe('threadDetailReducer function', () => {
         expect(nextState).toEqual(action.payload.threadDetail);
       });
 
-  it('should return null when given by CLEAR_THREAD_DETAIL action', () => {
-    const initialState = {
-      'id': 'thread-1',
-      'title': 'Thread Pertama',
-      'body': 'Ini adalah thread pertama',
-      'category': 'General',
-      'createdAt': '2021-06-21T07:00:00.000Z',
-      'owner': {
-        'id': 'users-1',
-        'name': 'John Doe',
-        'avatar': 'https://generated-image-url.jpg',
-      },
-      'upVotesBy': [],
-      'downVotesBy': [],
-      'comments': [
-        {
-          'id': 'comment-1',
-          'content': 'Ini adalah komentar pertama',
+  it(
+      'should return null when given by CLEAR_THREAD_DETAIL action',
+      () => {
+        const initialState = {
+          'id': 'thread-1',
+          'title': 'Thread Pertama',
+          'body': 'Ini adalah thread pertama',
+          'category': 'General',
           'createdAt': '2021-06-21T07:00:00.000Z',
           'owner': {
             'id': 'users-1',
@@ -81,18 +86,30 @@ describe('threadDetailReducer function', () => {
           },
           'upVotesBy': [],
           'downVotesBy': [],
-        },
-      ],
-    };
+          'comments': [
+            {
+              'id': 'comment-1',
+              'content': 'Ini adalah komentar pertama',
+              'createdAt': '2021-06-21T07:00:00.000Z',
+              'owner': {
+                'id': 'users-1',
+                'name': 'John Doe',
+                'avatar': 'https://generated-image-url.jpg',
+              },
+              'upVotesBy': [],
+              'downVotesBy': [],
+            },
+          ],
+        };
 
-    const action = {
-      type: 'CLEAR_THREAD_DETAIL',
-    };
+        const action = {
+          type: 'CLEAR_THREAD_DETAIL',
+        };
 
-    const nextState = threadDetailReducer(initialState, action);
+        const nextState = threadDetailReducer(initialState, action);
 
-    expect(nextState).toEqual(null);
-  });
+        expect(nextState).toEqual(null);
+      });
 
   it(
       'should return the thread with the upvoted thread when given by UPVOTE_THREAD action',
@@ -238,7 +255,8 @@ describe('threadDetailReducer function', () => {
         expect(nextState).toEqual(updatedThread);
       });
 
-  it('should return the thread with the new comment when given by COMMENT_THREAD_DETAIL',
+  it(
+      'should return the thread with the new comment when given by COMMENT_THREAD_DETAIL',
       () => {
         const initialState = {
           'id': 'thread-1',
