@@ -1,5 +1,5 @@
-import {useEffect} from 'react';
-import {Link, Route, Routes, useNavigate} from 'react-router-dom';
+import React, {useEffect} from 'react';
+import {Link, Route, Routes, useLocation, useNavigate} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
 import LoadingBar from 'react-redux-loading-bar';
 import HomePage from './pages/HomePage';
@@ -11,6 +11,7 @@ import ThreadDetailPage from './pages/ThreadDetailPage';
 import CreateThreadPage from './pages/CreateThreadPage';
 
 function App() {
+  const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const {authUser = null, isPrealod = false} = useSelector((state) => state);
@@ -50,7 +51,7 @@ function App() {
                     >
                       Logout
                     </button>
-                  ) : (
+                  ) : location.pathname != '/login' ? (
                     <button
                       onClick={onClickLogin}
                       className="px-4 py-2 text-sm text-gray-900 transition border border-gray-900 rounded-full hover:text-white hover:bg-gray-900"
@@ -58,7 +59,7 @@ function App() {
                     >
                       Login
                     </button>
-                  )}
+                  ): ''}
                 </div>
               </div>
             </div>
