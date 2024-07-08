@@ -7,6 +7,7 @@ import {
 } from 'react-icons/ai';
 import {asyncAddCommentThread, asyncDownvoteThread, asyncReceiveTalkDetail, asyncUpvoteThread} from '../states/threadDetail/action';
 import {postedAt} from '../utils/postedAt';
+import CommentItem from '../components/CommentItem';
 
 export default function ThreadDetailPage() {
   const dispatch = useDispatch();
@@ -109,48 +110,9 @@ export default function ThreadDetailPage() {
             <span>({threadDetail?.comments.length})</span>
           </div>
           <div className="divide-y-2">
-            {threadDetail?.comments.map((comment) => {
-              return (
-                <div key={comment.id} className="py-3">
-                  <div dangerouslySetInnerHTML={{__html: comment.content}} />
-                  <div className="flex items-center justify-between">
-                    <div className="flex flex-row items-center justify-start mt-4 space-x-4 text-xl min-w-10">
-                      <button
-                        type="button"
-                        className="flex items-center space-x-1"
-                      >
-                        <AiOutlineLike />
-                        <span className="text-sm">
-                          {comment.upVotesBy.length}
-                        </span>
-                      </button>
-                      <button
-                        type="button"
-                        className="flex items-center space-x-1"
-                      >
-                        <AiOutlineDislike />
-                        <span className="text-sm">
-                          {comment.downVotesBy.length}
-                        </span>
-                      </button>
-                    </div>
-                    <div className="flex items-center justify-end space-x-3">
-                      <div className="flex items-center space-x-2 text-base">
-                        <img
-                          className="rounded-full size-6"
-                          src={comment.owner.avatar}
-                          alt={comment.owner.name}
-                        />
-                        <span>{comment.owner.name}</span>
-                      </div>
-                      <span className="text-sm">
-                        {postedAt(comment.createdAt)}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
+            {threadDetail?.comments.map(
+                (comment) => <CommentItem key={comment.id} {...comment} />,
+            )}
           </div>
         </div>
       </div>
